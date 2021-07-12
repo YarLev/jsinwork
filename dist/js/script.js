@@ -1,7 +1,7 @@
 "use strict";
 window.addEventListener('DOMContentLoaded', () => {
 
-   //Start Tabs ************************************************************************************************************************
+   // Start Tabs ********************************************************************************************
 
    const tabsParent = document.querySelector('.tabheader__items'),
       tabs = document.querySelectorAll('.tabheader__item'),
@@ -40,9 +40,9 @@ window.addEventListener('DOMContentLoaded', () => {
       }
    });
 
-   //End Tabs **************************************************************************************************************************
+   // End Tabs **********************************************************************************************
 
-   //Start Timer ***********************************************************************************************************************
+   // Start Timer *******************************************************************************************
 
    const deadLine = '2021-07-19';
 
@@ -52,7 +52,7 @@ window.addEventListener('DOMContentLoaded', () => {
          hours = Math.floor((t / (1000 * 60 * 60) % 24)),
          minutes = Math.floor((t / 1000 / 60) % 60),
          seconds = Math.floor((t / 1000) % 60);
-      
+
       return {
          total: t,
          days: days,
@@ -63,7 +63,7 @@ window.addEventListener('DOMContentLoaded', () => {
    }
 
    function getZero(num) {
-      if (num >= 0 && num <10) {
+      if (num >= 0 && num < 10) {
          return `0${num}`;
       } else {
          return num;
@@ -77,9 +77,9 @@ window.addEventListener('DOMContentLoaded', () => {
          minutes = timer.querySelector('#minutes'),
          seconds = timer.querySelector('#seconds'),
          timeInterval = setInterval(updateClock, 1000);
-      
+
       updateClock();
-      
+
       function updateClock() {
          const t = getTimeRemaining(endtime);
 
@@ -96,5 +96,45 @@ window.addEventListener('DOMContentLoaded', () => {
 
    setClock('.timer', deadLine);
 
+   // End Timer *********************************************************************************************
 
+   // Start Modal ******************************************************************************************
+
+   const modalTrigger = document.querySelectorAll('[data-modal]'),
+      modal = document.querySelector('.modal'),
+      modalCloseBtn = document.querySelector('[data-close]');
+
+   function showModal(trigger) {
+      trigger.forEach(element => {
+         element.addEventListener('click', () => {
+            modal.classList.add('show');
+            modal.classList.remove('hide');
+            document.body.style.overflow = 'hidden';
+         });
+      });
+   }
+
+   function closeModal() {
+         modal.classList.add('hide');
+         modal.classList.remove('show');
+         document.body.style.overflow = '';
+   }
+
+   modalCloseBtn.addEventListener('click', closeModal);
+
+   modal.addEventListener('click', (e) => {
+      if (e.target == modal) {
+         closeModal();
+      }
+   });
+
+   document.addEventListener('keydown', (e) => {
+      if (e.code === "Escape" && modal.classList.contains('show')) {
+         closeModal();
+      }
+   });
+
+   showModal(modalTrigger);
+
+   // End Modal ******************************************************************************************
 });
